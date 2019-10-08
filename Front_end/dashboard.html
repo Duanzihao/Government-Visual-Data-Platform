@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
     <!-- stylesheet -->
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="styles/shards-dashboards.1.1.0.min.css">
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="styles/shards-dashboards.1.1.0.css">
     <link rel="stylesheet" href="styles/extras.1.1.0.min.css">
     <!-- End of stylesheet -->
 </head>
@@ -18,12 +18,12 @@
         <!-- Main Sidebar -->
         <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
             <div class="main-navbar">
-                <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+                <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
                     <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
                         <div class="d-table m-auto">
 <!--                            <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;"-->
 <!--                                 src="images/shards-dashboards-logo.svg" alt="Shards Dashboard">-->
-                            <span class="d-none d-md-inline ml-1">Dashboard</span>
+                            <span class="d-none d-md-inline ml-1" style="color: #CACEDB">Dashboard</span>
                         </div>
                     </a>
                     <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
@@ -130,30 +130,54 @@
                 <!-- Small Stats Blocks -->
                 <!-- End Small Stats Blocks -->
                 <div class="row">
-                    <div class="col-lg-5 col-md-12 col-sm-12 mb-4">
-                        <div class="card card-small" style="width:500px;height:400px" id="chart1"></div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+                        <div class="card card-small">
+                            <div class="card-header border-bottom">
+                                <h6 class="m-0">Chart 1</h6>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div style="width:560px;height:400px" id="chart1"></div>
+                            </div>
+<!--                            <div class="card-body pt-0">-->
+<!--                                <div class="row border-bottom py-2 bg-light">-->
+<!--                                    <div class="col-12 col-sm-6">-->
+<!--                                        <div id="chart1" class="d-flex flex-column" style="width:500px;height:400px">-->
+<!--                                           -->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--&lt;!&ndash;                                <canvas height="130" style="max-width: 100% !important;" class="blog-overview-users"></canvas>&ndash;&gt;-->
+<!--                            </div>-->
+                        </div>
                     </div>
-                    <div class="col-lg-7 col-md-12 col-sm-12 mb-4">
-                        <div class="card card-small" style="width:700px;height:400px" id="chart2"></div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+                        <div class="card card-small">
+                            <div class="card-header border-bottom">
+                                <h6 class="m-0">Chart 2</h6>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div style="width:600px;height:400px" id="chart2"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="#">link1</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="#">link2</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="#">link3</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Products</a>
+                        <a class="nav-link" href="#">link4</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blog</a>
+                        <a class="nav-link" href="#">link5</a>
                     </li>
                 </ul>
                 <span class="copyright ml-auto my-auto mr-2">Copyright © 2019 不知名小组</span>
