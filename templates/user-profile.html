@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <title>用户信息</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="" />
+    <script>
+        addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+    
+        function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+    </script>
+    <!-- //Meta tag Keywords -->
+
+    <!-- Custom-Files -->
+    <link rel="stylesheet" href="{% static 'styles/index.css' %}" media="all" />
+    <!-- Style-CSS -->
+    <link rel="stylesheet" href="{% static 'styles/font-awesome.min.css' %}">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //Custom-Files -->
+
+    <!-- Web-Fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+    <!-- //Web-Fonts -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- header -->
+    <header id="home">
+        <div class="container">
+            <div class="header d-lg-flex justify-content-between align-items-center py-sm-3 py-2 px-sm-2 px-1">
+                <!-- logo -->
+                <div id="logo">
+                    <h1><a href="../index/">坪山区政府综合数据平台</a></h1>
+                </div>
+                <!-- //logo -->
+                <!-- nav -->
+                <div class="nav_w3ls ml-lg-5">
+                    <nav>
+                        <label for="drop" class="toggle">菜单</label>
+                        <input type="checkbox" id="drop" />
+                        <ul class="menu">
+                            <li><a href="../index/">首页</a></li>
+                            <li><a href="../realtime/">政务公开</a></li>
+                            <li><a href="../contact/">政务服务</a></li>
+							{% if request.session.is_login %}
+                            <li><a href="../user_profile/" style="color: white;">你好！{{request.session.user_id}}</a></li>
+                            <li class="ml-xl-5 ml-lg-2 mt-lg-0 mt-sm-4 mt-3">
+                                <a href="../logout" class="reqe-button text-uppercase">注销</a>
+                            </li>
+							{% else %}
+							<li class="ml-xl-5 ml-lg-2 mt-lg-0 mt-sm-4 mt-3">
+								<a href="../login/" class="reqe-button text-uppercase">登录</a>
+								<a href="../register" class="reqe-button text-uppercase">注册</a>
+							</li>
+							{% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <!-- //nav -->
+            </div>
+        </div>
+    </header>
+    <!-- //header -->
+    <!-- inner banner -->
+
+    <!-- contact -->
+    <section class="contact-wthree align-w3" id="contact">
+        <div class="container">
+            <div class="wthree_pvt_title text-center">
+                <h4 class="w3pvt-title">用户信息</h4>
+            </div>
+            <div class="mx-auto text-center"> <!-- //footer right -->
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-4">
+                    <div class="card card-small mb-4 pt-3">
+                        <div class="card-header border-bottom text-center">
+                            <div class="mb-3 mx-auto">
+                                <img class="rounded-circle" src="{% static 'images/avatars/admin.jpg' %}" alt="User Avatar" width="110"> </div>
+                            <h4 class="mb-0" id="name_left"></h4>
+<!--                            <span class="text-muted d-block mb-2">Admin</span>-->
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-4">
+                                <strong class="text-muted d-block mb-2">用户描述</strong>
+                                <span id="description_left"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card card-small mb-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <form action="../account_info_change/" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="name">姓名</label>
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="请输入姓名" value="" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="sex">性别</label>
+                                                    <select class="form-control" name="sex" id="sex">
+                                                        <option value="-">-</option>
+                                                        <option value="男">男</option>
+                                                        <option value="女">女</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="tel">手机号码</label>
+                                                    <input type="tel" class="form-control" name="tel" id="tel" placeholder="请输入手机号码" value="" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="email">电子邮箱</label>
+                                                    <input type="email" class="form-control" name="email" id="email" placeholder="请输入电子邮箱" value="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address">家庭地址</label>
+                                                <input type="text" class="form-control" name="address" id="address" placeholder="">
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="description">用户描述</label>
+                                                    <textarea class="form-control" name="description" id="description" rows="5"></textarea>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-accent btn-primary float-right">提交</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //contact -->
+
+    <!-- footer -->
+    <footer class="footer py-md-5 pt-md-3 pb-sm-5">
+        <div class="container">
+            <div class="row p-sm-4 px-3 py-3">
+                <div class="col-lg-4 footer-top mt-md-0 mt-sm-5">
+                    <h2>
+                        <a class="navbar-brand" href="../index/">
+                            坪山区政府综合数据平台
+                        </a>
+                    </h2>
+                    <!--					<div class="fv3-contact mt-2">-->
+                    <!--						<p>-->
+                    <!--							<a href="mailto:example@email.com">info@example.com</a>-->
+                    <!--						</p>-->
+                    <!--					</div>-->
+                    <div class="fv3-contact my-2">
+                        <p>
+                            投诉电话(执法投诉电话)：
+                            <br/>
+                            12345
+                            <br/>
+                            0755-28339260
+                        </p>
+                    </div>
+                    <div class="fv3-contact">
+                        <p>
+                            通讯地址：
+                            <br/>
+                            深圳市坪山区坪山大道333号区政府大楼
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-2  col-md-6 mt-lg-0 mt-4">
+                    <div class="footerv2-w3ls">
+                        <h3 class="mb-3 w3f_title">站内导航</h3>
+                        <hr>
+                        <ul class="list-w3pvtits">
+                            <li class="my-2">
+                                <a href="../index/">
+                                    首页
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="../realtime/">
+                                    政务公开
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="../contact/">
+                                    政务服务
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2  col-md-6 mt-lg-0 m-0">
+                    <div class="footerv2-w3ls">
+                        <h3 class="mb-3 w3f_title">深圳市及各区网站</h3>
+                        <hr>
+                        <ul class="list-w3pvtits">
+                            <li class="my-2">
+                                <a href="http://www.sz.gov.cn/">
+                                    深圳市
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szft.gov.cn/">
+                                    福田区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szlh.gov.cn/">
+                                    罗湖区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.yantian.gov.cn/">
+                                    盐田区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szns.gov.cn/">
+                                    南山区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.baoan.gov.cn/">
+                                    宝安区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.lg.gov.cn/">
+                                    龙岗区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szlhq.gov.cn/">
+                                    龙华区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szgm.gov.cn/">
+                                    光明区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.dpxq.gov.cn/">
+                                    大鹏新区
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://qh.sz.gov.cn/">
+                                    深圳前海
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2  col-md-6 mt-lg-0 mt-4">
+                    <div class="footerv2-w3ls">
+                        <h3 class="mb-3 w3f_title">其他链接</h3>
+                        <hr>
+                        <ul class="list-w3pvtits">
+                            <li>
+                                <a href="http://www.sznews.com/">
+                                    深圳新闻网
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://ipingshan.sznews.com/">
+                                    坪山新闻网
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://ps.szzfcg.cn/">
+                                    坪山区公共资源交易中心
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szpsq.org.cn/">
+                                    坪山信用网
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szpsq.gov.cn/gafj/">
+                                    坪山公安分局
+                                </a>
+                            </li>
+                            <li class="my-2">
+                                <a href="http://www.szpsq.gov.cn/psjyjjcjyk/">
+                                    坪山教育局基础教育科
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //footer bottom -->
+    </footer>
+    <!-- //footer -->
+    <!-- copyright -->
+    <div class="cpy-right text-center bg-theme">
+        <p class="text-wh">Copyright &copy; 2019--脸滚键盘组</p>
+    </div>
+    <!-- //copyright -->
+    <!-- move top icon -->
+    <a href="#home" class="move-top text-center">
+        <span class="fa fa-level-up" aria-hidden="true"></span>
+    </a>
+    <!-- //move top icon -->
+<script>
+    var profile = {{ profile_dict|safe }};
+</script>
+<script src="{% static 'scripts/user-profile.js' %}"></script>
+</body>
+
+</html>

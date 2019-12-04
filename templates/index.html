@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+	<title>坪山区政府综合数据平台</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords" content="" />
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!-- //Meta tag Keywords -->
+
+	<!-- Custom-Files -->
+	<link rel="stylesheet" href="{% static 'styles/index.css' %}" />
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!-- Bootstrap-Core-CSS -->
+
+	<!-- Style-CSS -->
+	<link rel="stylesheet" href="{% static 'styles/font-awesome.min.css' %}">
+	<!-- Font-Awesome-Icons-CSS -->
+	<!-- //Custom-Files -->
+
+	<!-- Web-Fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+	 rel="stylesheet">
+	<link href="http://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+	<!-- //Web-Fonts -->
+</head>
+
+<body>
+	<!-- header -->
+	<header id="home">
+		<div class="container">
+			<div class="header d-lg-flex justify-content-between align-items-center py-sm-3 py-2 px-sm-2 px-1">
+				<!-- logo -->
+				<div id="logo">
+					<h1><a href="../index/">坪山区政府综合数据平台</a></h1>
+				</div>
+				<!-- //logo -->
+				<!-- nav -->
+				<div class="nav_w3ls ml-lg-5">
+					<nav>
+						<label for="drop" class="toggle">菜单</label>
+						<input type="checkbox" id="drop" />
+						<ul class="menu">
+							<li><a href="../index/">首页</a></li>
+							<li><a href="../realtime/">政务公开</a></li>
+							<li><a href="../contact/">政务服务</a></li>
+							{% if request.session.is_login %}
+                            <li><a href="../user_profile/" style="color: white;">你好！{{request.session.user_id}}</a></li>
+                            <li class="ml-xl-5 ml-lg-2 mt-lg-0 mt-sm-4 mt-3">
+                                <a href="../logout" class="reqe-button text-uppercase">注销</a>
+                            </li>
+							{% else %}
+							<li class="ml-xl-5 ml-lg-2 mt-lg-0 mt-sm-4 mt-3">
+								<a href="../login/" class="reqe-button text-uppercase">登录</a>
+								<a href="../register" class="reqe-button text-uppercase">注册</a>
+							</li>
+							{% endif %}
+						</ul>
+					</nav>
+				</div>
+				<!-- //nav -->
+			</div>
+		</div>
+	</header>
+	<!-- //header -->
+
+	<!-- banner -->
+	<section class="banner">
+		<!-- banner text -->
+		<div class="container">
+			<div class="banner_text_wthree_pvt">
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<ul class="nav nav-tabs news" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="tab" href="#work">工作动态</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#announcement">通知公告</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#mediareport">媒体报道</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#politicalvoice">政声传递</a>
+								</li>
+							</ul>
+
+							<!-- Tab panes -->
+							<div class="tab-content news">
+								<div id="work" class="container tab-pane active"><br>
+									<ul>
+										<li>
+											<a title="坪山区审计局组织财政审计人员收看全省财政纵向到底全覆盖审计工作总结培训班视频转播" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191114_18633607.htm">
+												坪山区审计局组织财政审计人员收看全省财政纵向到底全覆盖审计工作总结培训班视频转播
+											</a>
+										</li>
+										<li>
+											<a title="坪山区工业和信息化局组织开展银企对接活动" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191114_18632336.htm">坪山区工业和信息化局组织开展银企对接活动</a>
+										</li>
+										<li>
+											<a title="坪山区召开创建全国文明城市暨保护未成年人工作推进会" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191113_18629169.htm">坪山区召开创建全国文明城市暨保护未成年人工作推进会</a>
+										</li>
+										<li>
+											<a title="坪山区开展领导班子法治专题讲座" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191114_18630746.htm">坪山区开展领导班子法治专题讲座</a>
+										</li>
+										<li>
+											<a title="坪山区城市更新和土地整备局开展城市更新项目拆除工程安全文明施工检查" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191113_18629169.htm">坪山区城市更新和土地整备局开展城市更新项目拆除工程安全文明施工检查</a>
+										</li>
+										<li>
+											<a title="坪山区群团工作部举办的“坪山女学苑”第一期月嫂培训班顺利结课" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191113_18628912.htm">坪山区群团工作部举办的“坪山女学苑”第一期月嫂培训班顺利结课</a>
+										</li>
+										<li>
+											<a title="坪山区建筑工务署召开建设项目实施精细化管理工作推进会" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191112_18626425.htm">坪山区建筑工务署召开建设项目实施精细化管理工作推进会</a>
+										</li>
+										<li>
+											<a title="坪山区锦绣华晟家园保障性住房项目开展早班保安队伍消防培训演练" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191112_18626516.htm">坪山区锦绣华晟家园保障性住房项目开展早班保安队伍消防培训演练</a>
+										</li>
+										<li>
+											<a title="坪山区退役军人事务局党组开展“不忘初心、牢记使命”主题教育活动暨学习贯彻党的十九届四中全会精神" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191112_18626081.htm">坪山区建筑工务署召开建设项目实施精细化管理工作推进会</a>
+										</li>
+										<li>
+											<a title="坪山区城市更新和土地整备局开展“不忘初心、牢记使命”主题教育工会职工活动" href="http://www.szpsq.gov.cn/xxgk/jt/gzdt/201911/t20191112_18625486.htm">坪山区城市更新和土地整备局开展“不忘初心、牢记使命”主题教育工会职工活动</a>
+										</li>
+									</ul>
+
+								</div>
+								<div id="announcement" class="container tab-pane fade"><br>
+									<ul>
+										<li>
+											<a title="深圳市坪山区公办中小学2019年6月公开招聘常设岗位教师拟聘人员名单公示（二）" href="http://www.szpsq.gov.cn/xxgk/jt/tzgg/201911/t20191122_18884387.htm">深圳市坪山区公办中小学2019年6月公开招聘常设岗位教师拟聘人员名单公示（二）</a>
+										</li>
+										<li>
+											<a title="深圳市坪山区卫生健康局关于2019年10月公开选聘职员入围体检名单及相关事项的通告" href="http://www.szpsq.gov.cn/xxgk/jt/tzgg/201911/t20191122_18884264.htm">深圳市坪山区卫生健康局关于2019年10月公开选聘职员入围体检名单及相关事项的通告</a>
+										</li>
+										<li>
+											<a title="坪山区水务局2019年10月公开选聘职员考核成绩及体检人选公告" href="http://www.szpsq.gov.cn/xxgk/jt/tzgg/201911/t20191122_18884029.htm">坪山区水务局2019年10月公开选聘职员考核成绩及体检人选公告</a>
+										</li>
+										<li>
+											<a title="坪山区卫生健康局关于开展坪山区第二届中医药文化节活动的通告" href="http://www.szpsq.gov.cn/xxgk/jt/tzgg/201911/t20191122_18883211.htm">坪山区卫生健康局关于开展坪山区第二届中医药文化节活动的通告</a>
+										</li>
+										<li>
+											<a title="深圳市坪山区教育系统2019年11月赴东北师范大学、华东师范大学面向2020年应届毕业生公开招聘在编教师面试成绩及体检公告" href="http://www.szpsq.gov.cn/xxgk/jt/tzgg/201911/t20191122_18882386.htm">深圳市坪山区教育系统2019年11月赴东北师范大学、华东师范大学面向2020年应届毕业生公开招聘在编教师面试成绩及体检公告</a>
+										</li>
+										<li>
+											<a title="中共深圳市坪山区委党校2019年10月公开选聘职员考核成绩及体检人选公告" href="http://www.szpsq.gov.cn/xxgk/jt/tzgg/201911/t20191121_18881177.htm">中共深圳市坪山区委党校2019年10月公开选聘职员考核成绩及体检人选公告</a>
+										</li>
+									</ul>
+
+								</div>
+								<div id="mediareport" class="container tab-pane fade"><br>
+									<ul>
+										<li>
+											<a title="坪山区融媒体中心正式揭牌" href="http://www.szpsq.gov.cn/xxgk/jt/tpxw/201911/t20191121_18880218.htm">坪山区融媒体中心正式揭牌</a>
+										</li>
+										<li>
+											<a title="坪山区全力推进全国文明城市创建工作" href="http://www.szpsq.gov.cn/xxgk/jt/tpxw/201911/t20191120_18793008.htm">坪山区全力推进全国文明城市创建工作</a>
+										</li>
+										<li>
+											<a title="2019年Sci国际科技创新论坛（坪山）暨Sci中加国际创新（坪山）中心启动" href="http://www.szpsq.gov.cn/xxgk/jt/tpxw/201911/t20191118_18742024.htm">2019年Sci国际科技创新论坛（坪山）暨Sci中加国际创新（坪山）中心启动</a>
+										</li>
+										<li>
+											<a title="深圳公园文化季坪山区分会场“绿意”环绕" href="http://www.szpsq.gov.cn/xxgk/jt/tpxw/201911/t20191118_18741966.htm">深圳公园文化季坪山区分会场“绿意”环绕</a>
+										</li>
+										<li>
+											<a title="坪山区委理论学习中心组（扩大）学习会举行" href="http://www.szpsq.gov.cn/xxgk/jt/tpxw/201911/t20191115_18678320.htm">坪山区委理论学习中心组（扩大）学习会举行</a>
+										</li>
+										<li>
+											<a title="坪山工匠园建设咨询委员会成立" href="http://www.szpsq.gov.cn/xxgk/jt/tpxw/201911/t20191115_18678308.htm">坪山工匠园建设咨询委员会成立</a>
+										</li>
+									</ul>
+
+								</div>
+								<div id="politicalvoice" class="container tab-pane fade"><br>
+									<ul>
+										<li>
+											<a title="李克强向巴斯夫（广东）一体化基地项目启动仪式致贺信" href="http://www.gov.cn/premier/2019-11/23/content_5454857.htm">李克强向巴斯夫（广东）一体化基地项目启动仪式致贺信</a>
+										</li>
+										<li>
+											<a title="../巴斯夫（广东）一体化基地项目正式启动" href="http://www.gd.gov.cn/gdywdt/gdyw/content/post_2704322/">巴斯夫（广东）一体化基地项目正式启动 李克强默克尔分别致贺信</a>
+										</li>
+										<li>
+											<a title="../国际金融论坛第16届全球年会在广州开幕" href="http://www.gd.gov.cn/gdywdt/gdyw/content/post_2704321/">国际金融论坛第16届全球年会在广州开幕 李希出席并致辞 周小川作主旨演讲</a>
+										</li>
+										<li>
+											<a title="王毅：开创21世纪中日地方大交流的新时代" href="http://www.gov.cn/guowuyuan/2019-11/24/content_5455048.htm">王毅：开创21世纪中日地方大交流的新时代</a>
+										</li>
+										<li>
+											<a title="王毅会见荷兰外交大臣布洛克" href="http://www.gov.cn/guowuyuan/2019-11/23/content_5454949.htm">王毅会见荷兰外交大臣布洛克</a>
+										</li>
+										<li>
+											<a title="王毅会见加拿大外长商鹏飞" href="http://www.gov.cn/guowuyuan/2019-11/23/content_5454946.htm">王毅会见加拿大外长商鹏飞</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //banner text -->
+		<!-- banner-bottom -->
+		<div class="banner-bottom-w3ls">
+			<div class="container">
+				<div class="row" align="center">
+					<div class="col-sm-4 col-6">
+						<div class="bb-img">
+						  <img src="{% static 'images/home-img-2-9.jpg' %}" class="img-fluid img-thumbnail" alt="" />
+<!--							<h3>caption goes here</h3>-->
+					  </div>
+					</div>
+					<div class="col-sm-4 col-6">
+						<div class="bb-img">
+							<img src="{% static 'images/home-img-2-3.jpg' %}" class="img-fluid img-thumbnail" alt="" />
+<!--							<h3>caption goes here</h3>-->
+						</div>
+					</div>
+					<div class="col-sm-4 col-6 mx-auto mt-sm-0 mt-4">
+						<div class="bb-img">
+							<img src="{% static 'images/home-img-2-4.jpg' %}" class="img-fluid img-thumbnail" alt="" />
+<!--							<h3>caption goes here</h3>-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //banner-bottom -->
+	</section>
+	<!-- //banner -->
+
+	<!-- about-->
+	<section class="single_grid_w3_main align-w3-abt" id="about"> </section>
+	<!-- //about -->
+
+	<!-- services -->	<!-- //services -->
+
+	<!-- portfolio -->	<!-- //portfolio -->
+
+	<!-- slide -->	<!-- //slide -->
+
+	<!-- blog -->	<!-- //blog -->
+
+	<!-- footer -->
+	<footer class="footer py-md-5 pt-md-3 pb-sm-5">
+		<div class="container">
+			<div class="row p-sm-4 px-3 py-3">
+				<div class="col-lg-4 footer-top mt-md-0 mt-sm-5">
+					<h2>
+						<a class="../navbar-brand" href="../index/">
+							坪山区政府综合数据平台
+						</a>
+					</h2>
+<!--					<div class="fv3-contact mt-2">-->
+<!--						<p>-->
+<!--							<a href="mailto:example@email.com">info@example.com</a>-->
+<!--						</p>-->
+<!--					</div>-->
+					<div class="fv3-contact my-2">
+						<p>
+							投诉电话(执法投诉电话)：
+							<br/>
+							12345
+							<br/>
+							0755-28339260
+						</p>
+					</div>
+					<div class="fv3-contact">
+						<p>
+							通讯地址：
+							<br/>
+							深圳市坪山区坪山大道333号区政府大楼
+						</p>
+					</div>
+				</div>
+				<div class="col-lg-2  col-md-6 mt-lg-0 mt-4">
+					<div class="footerv2-w3ls">
+						<h3 class="mb-3 w3f_title">站内导航</h3>
+						<hr>
+						<ul class="list-w3pvtits">
+							<li class="my-2">
+								<a href="../index/">
+									首页
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="../realtime/">
+									政务公开
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="../contact/">
+									政务服务
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2  col-md-6 mt-lg-0 m-0">
+					<div class="footerv2-w3ls">
+						<h3 class="mb-3 w3f_title">深圳市及各区网站</h3>
+						<hr>
+						<ul class="list-w3pvtits">
+							<li class="my-2">
+								<a href="http://www.sz.gov.cn/">
+									深圳市
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szft.gov.cn/">
+									福田区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szlh.gov.cn/">
+									罗湖区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.yantian.gov.cn/">
+									盐田区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szns.gov.cn/">
+									南山区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.baoan.gov.cn/">
+									宝安区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.lg.gov.cn/">
+									龙岗区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szlhq.gov.cn/">
+									龙华区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szgm.gov.cn/">
+									光明区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.dpxq.gov.cn/">
+									大鹏新区
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://qh.sz.gov.cn/">
+									深圳前海
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2  col-md-6 mt-lg-0 mt-4">
+					<div class="footerv2-w3ls">
+						<h3 class="mb-3 w3f_title">其他链接</h3>
+						<hr>
+						<ul class="list-w3pvtits">
+							<li>
+								<a href="http://www.sznews.com/">
+									深圳新闻网
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://ipingshan.sznews.com/">
+									坪山新闻网
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://ps.szzfcg.cn/">
+									坪山区公共资源交易中心
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szpsq.org.cn/">
+									坪山信用网
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szpsq.gov.cn/gafj/">
+									坪山公安分局
+								</a>
+							</li>
+							<li class="my-2">
+								<a href="http://www.szpsq.gov.cn/psjyjjcjyk/">
+									坪山教育局基础教育科
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //footer bottom -->
+	</footer>
+	<!-- //footer -->
+	<!-- copyright -->
+	<div class="cpy-right text-center bg-theme">
+		<p class="text-wh">Copyright &copy; 2019--脸滚键盘组 </p>
+	</div>
+	<!-- //copyright -->
+	<!-- move top icon -->
+	<a href="#home" class="move-top text-center">
+		<span class="fa fa-level-up" aria-hidden="true"></span>
+	</a>
+	<!-- //move top icon -->
+
+</body>
+</html>
