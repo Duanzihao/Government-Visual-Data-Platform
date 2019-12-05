@@ -22,19 +22,6 @@ cnt_register = 0 # 记录注册次数
 flag_login = [1]*100 # 用于标记第i次(1<=i<=100)登录时的账户、密码是否匹配：1-匹配,0-不匹配
 flag_register = [1]*100 # 用于标记注册时手机号码是否已被注册过(是否合法)：1-未注册过（合法）,0-已注册过（不合法）
 
-# 服务器端（注册时）检查手机号是否合法
-def isValid_phonenum(phonenum):
-    if len(phonenum)==11 and phonenum[0]=='1':
-        return True
-    else:
-        return False
-# 服务器端（注册时）检查密码是否合法
-def isValid_password(password):
-    if len(password)>=6:
-        return True
-    else:
-        return False
-
 # 主页
 def index(request):
     global flag_guest
@@ -166,14 +153,33 @@ def street_events(request):
     qdata = []
     if request.method == 'POST':
         request.encoding = 'utf-8'
-        time1 = request.POST['startDate'] + " 00:00:00"
-        time2 = request.POST['endDate'] + " 23:59:59"
-        for i in range(len(data)):
-            qdata.append([])
-            for j in range(len(street)):
-                qdata[i].append(find_time_with_street_events(main_column + ',' + data[i] + ',' + second_column + ',' + street[j] + ',' + time1 + ',' + time2))
-        return render(request, 'street_events.html', {'street_lst': street,'smalltypename_lst': data,'data_lst': qdata,
-        'startDate':request.POST['startDate'],'endDate':request.POST['endDate']})
+        # 用户选择的时间格式为‘年-月-日’（即查看指定时间范围内的数据）
+        if request.POST['mode'] == '1':
+            time1 = request.POST['startDate'] + " 00:00:00"
+            time2 = request.POST['endDate'] + " 23:59:59"
+            for i in range(len(data)):
+                qdata.append([])
+                for j in range(len(street)):
+                    qdata[i].append(find_time_with_street_events(main_column + ',' + data[i] + ',' + second_column + ',' + street[j] + ',' + time1 + ',' + time2))
+            return render(request, 'street_events.html', {'street_lst': street,'smalltypename_lst': data,'data_lst': qdata,
+            'startDate':request.POST['startDate'],'endDate':request.POST['endDate'],'datemode':'1'})
+        # 用户选择的时间格式为‘年-月’（即查看指定月份的数据）
+        elif request.POST['mode'] == '2':
+            year_month = request.POST['startDate'] # 获取‘年-月’
+            time1 = year_month + '-01 ' + '00:00:00'
+            # 按照指定的月份确定查询数据库的结束时间time2
+            if year_month.split('-')[1] in ['01','03','05','07','08','10','12']:
+                time2 = year_month + '-31' + " 23:59:59"
+            elif year_month.split('-')[1] in ['04','06','09','11']:
+                time2 = year_month + '-30' + " 23:59:59"
+            else:
+                time2 = year_month + '-28' + " 23:59:59"
+            for i in range(len(data)):
+                qdata.append([])
+                for j in range(len(street)):
+                    qdata[i].append(find_time_with_street_events(main_column + ',' + data[i] + ',' + second_column + ',' + street[j] + ',' + time1 + ',' + time2))
+            return render(request, 'street_events.html', {'street_lst': street,'smalltypename_lst': data,'data_lst': qdata,
+            'startDate':request.POST['startDate'],'endDate':'','datemode':'2'})                   
     else:
         time1 = "2018-10-30 00:00:00"
         time2 = "2018-10-30 23:59:59"        
@@ -182,7 +188,7 @@ def street_events(request):
             for j in range(len(street)):
                 qdata[i].append(find_time_with_street_events(main_column + ',' + data[i] + ',' + second_column + ',' + street[j] + ',' + time1 + ',' + time2))
         return render(request, 'street_events.html', {'street_lst': street,'smalltypename_lst': data,'data_lst': qdata,
-        'startDate':"2018-10-30",'endDate':"2018-10-30"})
+        'startDate':"2018-10-30",'endDate':"2018-10-30",'datemode':'1'})
 
 # 展示“民生分析”（问题性质）饼状图
 def livelihood_analysis(request):
@@ -193,42 +199,60 @@ def livelihood_analysis(request):
     qdata = []
     if request.method == 'POST':
         request.encoding = 'utf-8'
+        # 即查看指定时间范围内的数据
         time1 = request.POST['startDate'] + " 00:00:00"
         time2 = request.POST['endDate'] + " 23:59:59"
         for i in range(len(data)):
             qdata.append(find_time_with_minsheng(main_column + ',' + data[i] + ',' + time1 + ',' + time2))
         return render(request, 'livelihood_analysis.html', {'typename_lst': data,'data_lst': qdata,
         'startDate':request.POST['startDate'],'endDate':request.POST['endDate']})
+
     else:  # 默认展示今日（2018-10-30）的事件
         time1 = "2018-10-30 00:00:00"
         time2 = "2018-10-30 23:59:59"   
         for i in range(len(data)):
             qdata.append(find_time_with_minsheng(main_column + ',' + data[i] + ',' + time1 + ',' + time2))
         return render(request, 'livelihood_analysis.html', {'typename_lst': data,'data_lst': qdata,
-        'startDate':"2018-10-30",'endDate':"2018-10-30"})
+        'startDate':"2018-10-30",'endDate':"2018-10-30",'datemode':'1'})
 
 # 展示“热点社区分析”图表
 def hot_community(request):
     community = ['龙田社区', '金龟社区', '金沙社区', '马峦社区','老坑社区',  '竹坑社区', '秀新社区', 
     '碧岭社区', '石井社区', '田心社区', '田头社区', '沙田社区', '沙湖社区', '沙坣社区', '汤坑社区', 
     '江岭社区', '坪环社区', '坪山社区', '坑梓社区', '和平社区', '南布社区', '六联社区', '六和社区']
-    main_column = 'COMMUNITY_NAME'
     qdata = []
     if request.method == 'POST':
         request.encoding = 'utf-8'
-        time1 = request.POST['startDate'] + " 00:00:00"
-        time2 = request.POST['endDate'] + " 23:59:59"
-        for i in range(len(community)):
-            qdata.append(hot_street(community[i] + ',' + time1 + ',' + time2))
-        return render(request,"hot_community.html",{'street_lst': community,'data_lst': qdata,
-        'startDate':request.POST['startDate'],'endDate':request.POST['endDate']})
+        # 用户选择的时间格式为‘年-月-日’（即查看指定时间范围内的数据）
+        if request.POST['mode'] == '1':
+            time1 = request.POST['startDate'] + " 00:00:00"
+            time2 = request.POST['endDate'] + " 23:59:59"
+            for i in range(len(community)):
+                qdata.append(hot_street(community[i] + ',' + time1 + ',' + time2))
+            return render(request,"hot_community.html",{'street_lst': community,'data_lst': qdata,
+            'startDate':request.POST['startDate'],'endDate':request.POST['endDate'],'datemode':'1'})
+        # 用户选择的时间格式为‘年-月’（即查看指定月份的数据）
+        elif request.POST['mode'] == '2':
+            year_month = request.POST['startDate'] # 获取‘年-月’
+            time1 = year_month + '-01 ' + '00:00:00'
+            # 按照指定的月份确定查询数据库的结束时间time2
+            if year_month.split('-')[1] in ['01','03','05','07','08','10','12']:
+                time2 = year_month + '-31' + " 23:59:59"
+            elif year_month.split('-')[1] in ['04','06','09','11']:
+                time2 = year_month + '-30' + " 23:59:59"
+            else:
+                time2 = year_month + '-28' + " 23:59:59"
+            for i in range(len(community)):
+                qdata.append(hot_street(community[i] + ',' + time1 + ',' + time2))
+            return render(request,"hot_community.html",{'street_lst': community,'data_lst': qdata,
+            'startDate':request.POST['startDate'], 'endDate':'', 'datemode':'2'})
     else:
         time1 = "2018-10-30 00:00:00"
         time2 = "2018-10-30 23:59:59"  
         for i in range(len(community)):
             qdata.append(hot_street(community[i] + ',' + time1 + ',' + time2))
         return render(request,"hot_community.html",{'street_lst': community,'data_lst': qdata,
-        'startDate':"2018-10-30",'endDate':"2018-10-30"})
+        'startDate':"2018-10-30",'endDate':"2018-10-30",'datemode':'1'})
 
 # 展示“事情结办分析”图表（未完成）
 def done(request):
@@ -238,17 +262,65 @@ def done(request):
     problemdata = []
     if request.method == 'POST':
         request.encoding = 'utf-8'
-        time1 = request.POST['startDate'] + " 00:00:00"
-        time2 = request.POST['endDate'] + " 23:59:59"
-        # 查询结办情况
-        execdata.append(intime_to_archive_num(time1 + ',' + time2))
-        execdata.append(overtime_archive_num(time1 + ',' + time2))
-        execdata.append(intime_archive_num(time1 + ',' + time2))
-        for i in range(len(typename)): # 查询各类型事件数量
-            problemdata.append(event_type(typename[i] + ',' + time1 + ',' + time2))
-        return render(request,"done.html",{'typename_lst':typename,'execdata_lst':execdata,'problemdata_lst':problemdata,
-        'startDate':request.POST['startDate'],'endDate':request.POST['endDate']})
-    else:
+        # 用户选择的时间格式为‘年-月-日’（即查看指定时间范围内的数据）
+        if request.POST['mode'] == '1':
+            time1 = request.POST['startDate'] + " 00:00:00"
+            time2 = request.POST['endDate'] + " 23:59:59"
+            # 查询结办情况
+            execdata.append(intime_to_archive_num(time1 + ',' + time2))
+            execdata.append(overtime_archive_num(time1 + ',' + time2))
+            execdata.append(intime_archive_num(time1 + ',' + time2))
+            for i in range(len(typename)): # 查询各类型事件数量
+                problemdata.append(event_type(typename[i] + ',' + time1 + ',' + time2))
+            return render(request,"done.html",{'typename_lst':typename,'execdata_lst':execdata,'problemdata_lst':problemdata,
+            'startDate':request.POST['startDate'],'endDate':request.POST['endDate'], 'datemode':'1'})
+
+        # 用户选择的时间格式为‘年-月’（即查看指定月份的数据）
+        elif request.POST['mode'] == '2':
+            year_month = request.POST['startDate'] # 获取‘年-月’
+            time1 = year_month + '-01 ' + '00:00:00'
+            # 按照指定的月份确定查询数据库的结束时间time2
+            if year_month.split('-')[1] in ['01','03','05','07','08','10','12']:
+                time2 = year_month + '-31' + " 23:59:59"
+            elif year_month.split('-')[1] in ['04','06','09','11']:
+                time2 = year_month + '-30' + " 23:59:59"
+            else:
+                time2 = year_month + '-28' + " 23:59:59"
+            # 查询结办情况
+            execdata.append(intime_to_archive_num(time1 + ',' + time2))
+            execdata.append(overtime_archive_num(time1 + ',' + time2))
+            execdata.append(intime_archive_num(time1 + ',' + time2))
+            for i in range(len(typename)): # 按月份查询各类型事件数量
+                problemdata.append(event_type(typename[i] + ',' + time1 + ',' + time2))
+            return render(request,"done.html",{'typename_lst':typename,'execdata_lst':execdata,'problemdata_lst':problemdata,
+            'startDate':request.POST['startDate'],'endDate':'','datemode':'2'}) # 返回的startDate和endDate可能要修改
+
+        # 用户选择的时间格式为‘年-季度’（即查看指定季度的数据）
+        elif request.POST['mode'] == '3':
+            year = request.POST['year'] # 获取年份
+            quarter = request.POST['season'] # 获取选择的季度('1' / '2' / '3' / '4')
+            # 查询结办情况
+            execdata.append(intime_to_archive_num_quarter(quarter+','+year))
+            execdata.append(overtime_archive_num_quarter(quarter+','+year))
+            execdata.append(intime_archive_num_quarter(quarter+','+year))
+            for i in range(len(typename)): # 按季度查询各类型事件数量
+                if quarter == '1':
+                    time1 = year + '-01-01 00:00:00'
+                    time2 = year + '-03-31 23:59:59'
+                elif quarter == '2':
+                    time1 = year + '-04-01 00:00:00'
+                    time2 = year + '-06-30 23:59:59'
+                elif quarter == '3':
+                    time1 = year + '-07-01 00:00:00'
+                    time2 = year + '-09-30 23:59:59'
+                else :
+                    time1 = year + '-10-01 00:00:00'
+                    time2 = year + '-12-31 23:59:59'                    
+                problemdata.append(event_type(typename[i] + ',' + time1 + ',' + time2))
+            return render(request,"done.html",{'typename_lst':typename,'execdata_lst':execdata,'problemdata_lst':problemdata,
+            'startDate':year+'-'+quarter,'endDate':'', 'datemode':'3'})  # 返回的startDate和endDate可能要修改 
+
+    else: # 若用户为指定时间范围，则默认显示当天的数据
         time1 = "2018-10-30 00:00:00"
         time2 = "2018-10-30 23:59:59"  
         execdata.append(intime_to_archive_num(time1 + ',' + time2))
@@ -257,14 +329,13 @@ def done(request):
         for i in range(len(typename)): # 查询各类型事件数量
             problemdata.append(event_type(typename[i] + ',' + time1 + ',' + time2))
         return render(request,"done.html",{'typename_lst':typename,'execdata_lst':execdata,'problemdata_lst':problemdata,
-        'startDate':"2018-10-30",'endDate':"2018-10-30"})
+        'startDate':"2018-10-30",'endDate':"2018-10-30",'datemode':'1'})
 
 # 在异常事件展示中需要被访问的url（未完成）
 def abnormal_events(request):
     global i
     exc_matters = matter_exceptions()
     events = exc_matters[i]
-    # print(events)
     if request.method == "GET":
         i = i+1
         return HttpResponse('系统检测到 {} 的 {} 的 {} 问题一天内被反馈 {} 次 ，可能存在异常，请及时通知相关人员处理。'.format
@@ -278,8 +349,6 @@ def scroll_display(request):
     para = {'time':events[3],'street':events[2],'community':events[5],'src':events[1],'event':events[4],'property':events[0],'dispose_unit':events[6]}
     if request.method == "GET":
         j = j+1
-        # return HttpResponse(para)
-        print(json.dumps(para))
         return HttpResponse(json.dumps(para))
 
 # 为管理员展示反馈信息页面
@@ -294,16 +363,8 @@ def feedback(request):
 def store_feedback(request):
     if request.method == "POST":
         form_data = request.POST.dict()
-        # print(form_data)
-        # while True:
-        #     pass
         para = form_data['property'] + '*' + form_data['event-type'] + '*' + form_data['street'] + '*' + form_data['time'] + '*' + form_data['sub-type'] + '*' + form_data['community'] + '*' + form_data['dispose-unit'] + '*' + form_data['main-type']
-        # print(para)
-        # while True:
-        #     pass
-        # para = '投诉*市容环卫*102*2019-11-27*市容环卫*-*龙田街道综合执法队*市容城管'
         government_insert_information(para)
-
         # 将临时数据库中的相应反馈数据删除
         delete_has_been_used_info_in_infoback_database(form_data['tel'] + '*' + form_data['time'])
         return redirect('../feedback/')
@@ -344,7 +405,3 @@ def logout(request):
 def goto_index(request):
     return redirect("../index/")  # 退出登录后回到主页
 
-
-
-# # 在读取未录入反馈时被访问的url
-# def read_feedback(request):

@@ -19,11 +19,10 @@ urlpatterns = [
     path('abnormal_events/',views.abnormal_events),
     path('scroll_display/',views.scroll_display),
     path('feedback/',views.feedback),
-    # path('read_feedback/',views.read_feedback),
     path('store_feedback/',views.store_feedback),
     path('user_profile/',views.profile),
     path('account_info_change/',views.account_info_change),
     path('logout/',views.logout),
-    path('',views.goto_index),# 用于从根目录直接转到/index
+    path('',views.goto_index), # 用于从根目录直接转到/index
     path('delete_feedback/',views.delete_feedback),
 ]

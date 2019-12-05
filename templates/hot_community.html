@@ -161,27 +161,67 @@
                             </div>
 
                             <div class="card-body pt-0" align="center">
-                                <div class="card-body" style="width: 40%">
-                                    <form class="form-group" method="post">
-                                        {% csrf_token %}
-                                        <div class="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
-                                            <span class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="material-icons"></i>
-                                                </span>
-                                            </span>
-                                            <input id="startDate" name="startDate" type="text" class="input-sm form-control input-date" value="{{ startDate|safe }}" placeholder="开始时间">
-                                            <span class="input-group-append">
-                                                <span class="input-group-text">
-                                                    ~
-                                                </span>
-                                            </span>
-                                            <input id="endDate" name="endDate" type="text" class="input-sm form-control input-date" value="{{ endDate|safe }}" placeholder="结束时间">
-                                            <span class="input-group-append">
-                                                <button type="submit" class="btn btn-sm btn-primary">提交</button>
-                                            </span>
+                                <div id="accordion" class="py-2">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                                                按日期选择
+                                            </a>
                                         </div>
-                                    </form>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                            <div class="card-body" style="width: 40%">
+                                                <form class="form-group" method="post" action="../hot_community/" id="dateform">
+                                                    {% csrf_token %}
+                                                    <input class="form-control" name="mode" value="1" unselectable="on" readonly hidden>
+                                                    <div class="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
+                                                        <span class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="material-icons"></i>
+                                                            </span>
+                                                        </span>
+                                                        <input id="startDate" name="startDate" type="text" class="input-sm form-control input-date" placeholder="开始时间">
+                                                        <span class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                ~
+                                                            </span>
+                                                        </span>
+                                                        <input id="endDate" name="endDate" type="text" class="input-sm form-control input-date" placeholder="结束时间">
+                                                        <span class="input-group-append">
+                                                            <button type="submit" class="btn btn-sm btn-primary">提交</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if request.session.is_gov %}
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                                                按月份选择
+                                            </a>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                            <div class="card-body" style="width: 40%">
+                                                <form class="form-group" method="post" action="../hot_community/" id="monthform">
+                                                    {% csrf_token %}
+                                                    <input class="form-control" name="mode" value="2" unselectable="on" readonly hidden>
+                                                    <div class="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0">
+                                                        <span class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="material-icons"></i>
+                                                            </span>
+                                                        </span>
+                                                        <input id="startMonth" name="startDate" type="text" class="input-sm form-control input-month" placeholder="请选择月份">
+                                                        <span class="input-group-append">
+                                                            <button type="submit" class="btn btn-sm btn-primary">提交</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 <div style="width: 800px; height: 600px" id="chart"></div>
                             </div>
@@ -235,6 +275,9 @@
 <script>
     var street = {{ street_lst|safe }};
     var data = {{ data_lst|safe }};
+    var startDate = "{{ startDate|safe }}";
+    var endDate = "{{ endDate|safe }}";
+    var datemode = "{{ datemode|safe }}";
 {% if request.session.is_gov %}
     var mode = 1;
 {% else %}
