@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 i = 0 # 用于异常报警的全局变量
 j = 0 # 用于滚动显示的全局变量
-flag_guest = 1 # 标志当前是否以游客身份访问系统
+# flag_guest = 1 # 标志当前是否以游客身份访问系统
 cnt_login = 0 # 记录登录次数(否则只要一次登录失败，之后进入登录页面就会报错)
 cnt_register = 0 # 记录注册次数
 flag_login = [1]*100 # 用于标记第i次(1<=i<=100)登录时的账户、密码是否匹配：1-匹配,0-不匹配
@@ -25,9 +25,10 @@ flag_register = [1]*100 # 用于标记注册时手机号码是否已被注册过
 # 主页
 def index(request):
     global flag_guest
-    if flag_guest == 1 or request.session['is_login'] == False:
-        request.session['is_login'] == False
-        flag_guest = flag_guest-1
+    # if flag_guest == 1 or request.session['is_login'] == False:
+        # request.session['is_login'] == False
+        # flag_guest = flag_guest-1
+    if request.session['is_login'] == False:
         return render(request,"index.html")
     else:
         return render(request,"index.html")
@@ -379,7 +380,7 @@ def delete_feedback(request):
 # 展示个人信息页面
 def profile(request):
     para_dict = scan_all_data_in_account_database(request.session['user_tel'])
-    print(para_dict)
+    #print(para_dict)
     return render(request,"user-profile.html",{'profile_dict': para_dict})
 
 # 修改用户个人信息
@@ -401,7 +402,11 @@ def logout(request):
     request.session['is_login'] = False
     return redirect("../index/")  # 退出登录后回到主页
 
-# 定向至主页
+# 将根url定向至主页
 def goto_index(request):
+    # global flag_guest
+    # flag_guest = 1
+    request.session.flush()
+    request.session['is_login'] = False
     return redirect("../index/")  # 退出登录后回到主页
 
